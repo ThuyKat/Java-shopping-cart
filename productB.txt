@@ -1,0 +1,5 @@
+2,FlowerB,3,0
+3,ToyB,5,0
+4,PhoneB,100,0
+5,ChairB,25,0
+6,CigarB,300,0
