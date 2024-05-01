@@ -49,7 +49,9 @@ public class MAIN {
 			case VIEW_CART:
 				
 				cartService.showCart(cart);
-				
+				for(ItemInCart item: cart.items) {
+					cart.total += item.product.price * item.quantity;
+				}
 				System.out.println("TOTAL : " + cart.total + " AUD");
 				System.out.println();
 				
@@ -88,9 +90,7 @@ public class MAIN {
 							
 					     }
 						// PRINT TOTAL
-						for(ItemInCart item: cart.items) {
-							cart.total += item.product.price * item.quantity;
-						}
+						
 						System.out.println("TOTAL : " + (float)cart.total + " AUD");
 						System.out.println();
 						// NGUOI DUNG CHON TIEP TUC SHOPPING HOAC DAT HANG
