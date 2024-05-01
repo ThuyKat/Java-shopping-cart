@@ -1,0 +1,4 @@
+1,Flower,3,0
+2,Toy,5,0
+3,Phone,100,0
+4,Chair,25,0

@@ -1,23 +1,58 @@
 package be6_day12.services;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import be6_day12.dto.Voucher;
-import be6_day12.utilities.ReadFileUtility;
+import java.util.Scanner;
 
-public class VoucherService {
+import be6_day12.entities.Shop;
+import be6_day12.entities.Voucher;
+
+
+public class VoucherService extends Service<Voucher> {
 //read Voucher file: product name, voucher code ,discount in AUD
-	static String voucherFile = ShopService.voucherFile;
-	public static ArrayList<Voucher> createVoucherObjects() {
-		ArrayList<String[]> stringList = ReadFileUtility.readDataFile(voucherFile);
-		ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
-		for (String[] el : stringList) {
-			Voucher v = new Voucher(el[0].trim(), el[1].trim(), Double.valueOf(el[2].trim()));
-			voucherList.add(v);
-		}
-		return voucherList;
+
+	public void showVoucher(Voucher voucher) {
+		System.out.println("DISCOUNT CODE APPLIED:"+voucher.voucherCode +": "+ voucher.voucherValue+" AUD"); 
 	}
 
-	public static void showVoucher(Voucher voucher) {
-		System.out.println("DISCOUNT CODE APPLIED:"+voucher.voucherCode +": "+ voucher.voucherValue+" AUD"); 
+	
+	public Voucher getById(int productID, Shop shop) {
+		ArrayList<Voucher>datas = getAllByShop(shop);
+		for(Voucher v : datas) {
+			if(v.productID==productID) {
+				return v;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<Voucher>getAllByShop(Shop shop){
+		ArrayList<Voucher>datas = null;
+		try {
+			datas = new ArrayList<Voucher>();
+			File myObj = new File("resource/shop-"+shop.id+"/voucher.txt");
+			Scanner myReader = new Scanner(myObj);
+			while(myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				String[] splitDatas = data.split(",");
+				Voucher x = new Voucher (splitDatas[0],Integer.parseInt(splitDatas[1]),Double.parseDouble(splitDatas[2]));
+				datas.add(x);
+			}
+			myReader.close();
+			return datas;
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return datas;
+		
+	}
+
+
+	@Override
+	public Voucher getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

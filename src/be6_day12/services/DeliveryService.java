@@ -1,30 +1,40 @@
 package be6_day12.services;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import be6_day12.dto.Menu;
+import be6_day12.entities.Product;
 
-public  abstract class DeliveryService {
-	
-public abstract  String showDeliveryTime();
-public static int calculateDeliveryFee() {
-	return 10 ;
-}
-public static int showDeliveryOptions() {
-	System.out.println("Select your delivery option below:");
-	System.out.println("1.Saving");
-	System.out.println("2.Basic");
-	System.out.println("3.Fast");
-	Scanner scan = new Scanner(System.in);
-	int selection = scan.nextInt();
-	return selection;	
-}
+public class DeliveryService extends Service<Product> {
 
-public static DeliveryService DeliveryOptionCreation(int selection) {
+	public String showDeliveryTime(int selection) {
+
+		if (selection == 1) {
+			return "Saving option - 3 to 5 days";
+		} else if (selection == 2) {
+			return " Standard option - 5 to 7 days";
+		} else {
+			return "Fast option - 1 to 2 days";
+		}
+	}
+
 	
-	if(selection == 1) {
-		return new SavingDelivery();
-	}else if(selection ==2) {
-		return new StandardDelivery();
-	}else {return new FastDelivery();}
+	public Product getShippingBySelection(int selection,Menu menu) {
+		ArrayList<Product> shippingOptions = menu.shippingOptions;
+		for(Product shipping : shippingOptions) {
+			if(shipping.productID == selection) {
+				return shipping;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public Product getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
-}
+
 }
